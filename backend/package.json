@@ -1,0 +1,23 @@
+{
+  "name": "codesentinel-backend",
+  "version": "1.0.0",
+  "description": "AI-powered repository health and code review platform - backend API",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.5.0",
+    "dotenv": "^16.4.5",
+    "cors": "^2.8.5",
+    "cookie-parser": "^1.4.6",
+    "jsonwebtoken": "^9.0.2",
+    "eslint": "^8.57.0",
+    "eslint-plugin-security": "^3.0.1",
+    "tar": "^7.4.3",
+    "pdfkit": "^0.15.0"
+  }
+}
