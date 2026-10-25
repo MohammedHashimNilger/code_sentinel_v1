@@ -4,7 +4,6 @@ import Scan from "../models/Scan.js";
 import Issue from "../models/Issue.js";
 import { generateScanReportPdf } from "../services/reportService.js";
 
-// @route   GET /api/reports/scans/:scanId
 export const exportScanReport = asyncHandler(async (req, res) => {
   const scan = await Scan.findById(req.params.scanId);
 

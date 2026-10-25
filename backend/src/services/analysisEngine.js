@@ -19,10 +19,6 @@ const countBySeverity = (issues) => {
   return breakdown;
 };
 
-// Main entry point - processes one scan from start to finish. Called
-// (without being awaited) from webhookController right after a Scan
-// record is created, so the webhook response isn't held up by the
-// minute-plus this can take on a larger repo.
 export const runScan = async (scanId) => {
   const scan = await Scan.findById(scanId);
   if (!scan) {
@@ -57,9 +53,6 @@ export const runScan = async (scanId) => {
       workDir
     );
 
-    // Run both detectors. They're independent of each other, so running
-    // them concurrently rather than sequentially cuts real wall-clock
-    // time off every scan.
     const [lintIssues, vulnIssues] = await Promise.all([
       lintDirectory(repoPath),
       scanDependencies(repoPath),
@@ -89,9 +82,6 @@ export const runScan = async (scanId) => {
     scan.completedAt = new Date();
     await scan.save();
   } finally {
-    // Always clean up the extracted source on disk, whether the scan
-    // succeeded or failed - otherwise every scan permanently consumes
-    // disk space on the server.
     if (fsSync.existsSync(workDir)) {
       await fs.rm(workDir, { recursive: true, force: true });
     }

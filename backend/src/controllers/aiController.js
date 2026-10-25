@@ -14,10 +14,6 @@ import { calculateHealthScore } from "../services/healthScoreService.js";
 const VALID_CATEGORIES = ["security", "correctness", "maintainability"];
 const VALID_SEVERITIES = ["critical", "high", "medium", "low"];
 
-// @route   POST /api/ai/issues/:issueId/explain
-// Generates (or returns cached) AI explanation + suggested fix for one
-// issue. This runs on demand instead of for every issue on every scan,
-// because most issues are never opened and we'd pay for unread output.
 export const explainIssueController = asyncHandler(async (req, res) => {
   const issue = await Issue.findById(req.params.issueId);
 
@@ -26,7 +22,6 @@ export const explainIssueController = asyncHandler(async (req, res) => {
     throw new Error("Issue not found");
   }
 
-  // An issue has no owner of its own. Ownership comes from its repository.
   const repository = await Repository.findOne({
     _id: issue.repository,
     owner: req.user._id,
@@ -37,7 +32,6 @@ export const explainIssueController = asyncHandler(async (req, res) => {
     throw new Error("Issue not found");
   }
 
-  // Already generated before, so no reason to spend another API call
   if (issue.aiExplanation && issue.aiSuggestedFix) {
     return res.status(200).json({ success: true, issue, cached: true });
   }
@@ -51,9 +45,6 @@ export const explainIssueController = asyncHandler(async (req, res) => {
   res.status(200).json({ success: true, issue, cached: false });
 });
 
-// Limits for the semantic review. Every file sent costs tokens, and a
-// large repo would not fit in one request, so we cap the count and size
-// and pick the smallest files first to cover more distinct files.
 const MAX_FILES = 15;
 const MAX_FILE_SIZE_BYTES = 30 * 1024;
 const SKIPPED_DIRS = new Set([
@@ -103,16 +94,9 @@ const selectFilesForReview = async (repoPath) => {
   );
 };
 
-// AI output is untrusted input. If the model returns a category or
-// severity outside our enums, fall back to a safe default instead of
-// letting it fail validation or corrupt the database.
 const clampToEnum = (value, validValues, fallback) =>
   validValues.includes(value) ? value : fallback;
 
-// @route   POST /api/ai/scans/:scanId/semantic-review
-// Runs the Groq review pass over the code, looking for issues that need
-// understanding of intent (injection, missing auth checks, hardcoded
-// secrets). On demand, not on every push, for cost reasons.
 export const runSemanticReviewController = asyncHandler(async (req, res) => {
   const scan = await Scan.findById(req.params.scanId);
 
@@ -151,13 +135,11 @@ export const runSemanticReviewController = asyncHandler(async (req, res) => {
     const files = await selectFilesForReview(repoPath);
 
     if (files.length === 0) {
-      return res
-        .status(200)
-        .json({
-          success: true,
-          findingsCreated: 0,
-          message: "No JS/JSX files to review",
-        });
+      return res.status(200).json({
+        success: true,
+        findingsCreated: 0,
+        message: "No JS/JSX files to review",
+      });
     }
 
     const findings = await semanticReview(files);
@@ -179,8 +161,6 @@ export const runSemanticReviewController = asyncHandler(async (req, res) => {
       await Issue.insertMany(issueDocuments);
     }
 
-    // Recompute the severity counts and health score from every issue on
-    // this scan, so the new AI findings show up in the totals.
     const allIssuesForScan = await Issue.find({ scan: scan._id });
     scan.severityBreakdown = {
       critical: allIssuesForScan.filter((i) => i.severity === "critical")

@@ -3,9 +3,6 @@ import Repository from "../models/Repository.js";
 import Scan from "../models/Scan.js";
 import Issue from "../models/Issue.js";
 
-// @route   GET /api/scans/:scanId/issues
-// Optional query params: ?severity=high&category=security to let the
-// dashboard filter without pulling every issue and filtering client-side.
 export const getIssuesForScan = asyncHandler(async (req, res) => {
   const scan = await Scan.findById(req.params.scanId);
 
@@ -28,8 +25,6 @@ export const getIssuesForScan = asyncHandler(async (req, res) => {
   if (req.query.severity) query.severity = req.query.severity;
   if (req.query.category) query.category = req.query.category;
 
-  // Worst-first ordering: critical/security issues are what a developer
-  // should see and act on first when opening a scan's results.
   const severityOrder = { critical: 0, high: 1, medium: 2, low: 3 };
   const issues = await Issue.find(query);
   issues.sort((a, b) => severityOrder[a.severity] - severityOrder[b.severity]);
@@ -37,7 +32,6 @@ export const getIssuesForScan = asyncHandler(async (req, res) => {
   res.status(200).json({ success: true, issues });
 });
 
-// @route   GET /api/issues/:id
 export const getIssueById = asyncHandler(async (req, res) => {
   const issue = await Issue.findById(req.params.id);
 
