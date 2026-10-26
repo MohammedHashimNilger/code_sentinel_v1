@@ -1,78 +1,76 @@
 # Code Sentinel
 
-Code Sentinel is a full-stack, AI-assisted repository health platform designed to help developers and teams monitor the quality of their GitHub projects in real time. It connects to GitHub repositories, analyzes code activity, surfaces issues, and delivers a clear health score with actionable insights.
+<p align="center">
+  <a href="https://code-sentinel-v1-five.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/Live%20Demo-Open%20Application-0A66C2?style=for-the-badge&logo=vercel" alt="Live Demo" />
+  </a>
+  <img src="https://img.shields.io/badge/Stack-React%20%7C%20Node.js%20%7C%20MongoDB-0A0F2C?style=for-the-badge" alt="Tech Stack" />
+  <img src="https://img.shields.io/badge/Type-AI%20Powered%20Portfolio%20Project-FF6B6B?style=for-the-badge" alt="AI Powered Portfolio Project" />
+</p>
 
-This project was built to show end-to-end product thinking: authentication, GitHub integrations, background scanning, data visualization, and AI-powered review workflows in a single application.
+Code Sentinel is an AI-assisted repository health monitoring platform built to help developers and teams understand the health of their GitHub projects in real time. The application connects to GitHub repositories, evaluates code quality signals, tracks project trends over time, and surfaces actionable issues through an intuitive dashboard.
 
-## Why this project stands out
+This project was designed to demonstrate full-stack product engineering, API integration, data visualization, and AI-enabled workflow design in a single SaaS-style application.
 
-- GitHub-connected monitoring for real repositories
-- Automated scanning and issue detection for code health
-- AI-powered semantic review to highlight deeper code concerns
-- Clean dashboard for tracking repository status over time
-- PDF reporting for sharing results with stakeholders
-- Full-stack implementation that feels like a real SaaS product
+## Live Demo
 
-## What the app does
+- Production URL: https://code-sentinel-v1-five.vercel.app/
 
-Code Sentinel lets a user:
+## Why this project matters
 
-- Connect one or more GitHub repositories
-- Trigger a scan manually or from repo events
-- View a repository health score and severity breakdown
-- Track trends across scans over time
-- Review detected issues and their explanations
-- Run AI-driven semantic analysis on a scan
-- Export a PDF report for stakeholder communication
+Code Sentinel addresses a real developer pain point: code quality and repository health are often difficult to monitor at a glance, especially across multiple repositories and teams. The platform brings those signals into one place so engineering leads, contributors, and stakeholders can quickly understand project health, identify risk areas, and act on meaningful issues.
 
-## Core features
+## Key features
 
-### 1. Repository management
-Users can sign in with GitHub, connect repositories, and manage them from a dashboard. Each repo is tracked with metadata, health trends, and scan history.
-
-### 2. Automated health scoring
-Repository analysis produces a health score along with breakdowns by severity, making it easy to understand where a codebase is strong and where it needs attention.
-
-### 3. Issue tracking
-The platform captures and organizes issues discovered during analysis, helping teams quickly identify risk areas.
-
-### 4. AI semantic review
-The app includes AI-powered review flows that can analyze scan results and surface additional meaningful findings beyond simple static detection.
-
-### 5. Reporting
-Health summaries can be exported as PDF reports, which is useful for engineering leads, product teams, or leadership reviews.
+- GitHub repository integration and authentication
+- Repository health scoring with severity-based issue breakdowns
+- Automated scan workflow for analyzing repository health
+- Trend tracking across multiple scan cycles
+- AI-assisted semantic review for deeper code insights
+- Dashboard-based visualization of repository status
+- PDF report generation for stakeholder sharing
+- Full-stack SaaS-style experience built end-to-end
 
 ## Tech stack
 
-- Frontend: React, Vite, React Router, Tailwind CSS
-- Backend: Node.js, Express
-- Database: MongoDB
-- Auth & integration: GitHub OAuth, GitHub API
-- Visualization: Recharts
-- AI workflow support: backend review endpoints and issue analysis pipeline
-- Document generation: PDFKit
+### Frontend
+- React
+- Vite
+- React Router
+- Tailwind CSS
+- Recharts
+- Tabler icons
+
+### Backend
+- Node.js
+- Express
+- MongoDB
+- JWT-based authentication
+- GitHub OAuth / GitHub API integration
+- PDF generation with PDFKit
+
+### Additional capabilities
+- AI-powered review workflow support
+- Data-driven dashboard analytics
+- Real-time repository monitoring experience
 
 ## Architecture overview
 
-The project is split into two main parts:
+The application is structured into two main services:
 
-- Frontend: interactive dashboard and repo detail pages
-- Backend: authentication, repository management, scan orchestration, AI review endpoints, and reporting APIs
+- Frontend: repository dashboards, health overview pages, and user-facing analytics
+- Backend: authentication, repository management, scan orchestration, AI review flows, and report generation
 
-The backend stores connected repositories, scan results, and issue data in MongoDB while communicating with GitHub to fetch repo metadata and manage repository hooks.
+The backend handles persistence of connected repositories, scan results, and issue metadata in MongoDB while communicating with GitHub to collect repository details and monitoring context.
 
 ## How it works
 
-1. User signs in with GitHub
-2. User connects a repository from the dashboard
-3. The system registers the repo and starts tracking it
-4. A scan runs to evaluate repository health and identify issues
-5. Results are stored and visualized on the frontend
-6. The user can trigger AI review and export reports as needed
-
-## Live demo
-
-Demo: https://code-sentinel-v1-five.vercel.app
+1. User signs in with GitHub.
+2. A repository is connected from the dashboard.
+3. The system tracks the repository and prepares a monitoring workflow.
+4. A health scan evaluates code quality and identifies issues.
+5. Results are stored and visualized in the user interface.
+6. Users can review findings, trigger AI-assisted analysis, and export reports.
 
 ## Project structure
 
@@ -88,7 +86,8 @@ code_sentinel_v1/
 │   ├── vite.config.js
 │   └── tailwind.config.js
 ├── .gitignore
-└── README.md
+├── README.md
+└── package.json
 ```
 
 ## Getting started locally
@@ -97,7 +96,7 @@ code_sentinel_v1/
 
 - Node.js 18+
 - MongoDB instance
-- GitHub account and OAuth app credentials
+- GitHub account with OAuth app credentials
 
 ### 1. Clone the repository
 
@@ -113,7 +112,7 @@ cd backend
 npm install
 ```
 
-Create a `.env` file inside `backend/` with the required configuration, including:
+Create a `.env` file in the `backend/` directory with the required variables:
 
 ```env
 PORT=5000
@@ -126,7 +125,7 @@ GITHUB_CLIENT_SECRET=your_github_client_secret
 JWT_SECRET=your_secret_key
 ```
 
-Then start the backend:
+Start the backend:
 
 ```bash
 npm run dev
@@ -139,50 +138,41 @@ cd ../frontend
 npm install
 ```
 
-Create a `.env` file inside `frontend/` if needed:
+Create a `.env` file in the `frontend/` directory if needed:
 
 ```env
 VITE_API_URL=http://localhost:5000
 ```
 
-Then start the frontend:
+Start the frontend:
 
 ```bash
 npm run dev
 ```
 
-## What I built as a developer
+## Skills demonstrated
 
-This project demonstrates practical product engineering skills, including:
+This project showcases a strong combination of product thinking and engineering execution, including:
 
-- Full-stack application development
-- Secure authentication and session handling
-- Third-party API integration
-- Database modeling and CRUD flows
-- UI/UX design for dashboards and data-heavy screens
-- Background processing for repo scanning workflows
+- Full-stack web application development
+- Secure authentication and session management
+- Third-party API integration with GitHub
+- Database modeling and data persistence with MongoDB
+- UI/UX design for dashboards and data-heavy interfaces
+- Analytics and reporting workflows
 - AI-enabled product feature design
-- Deployment-ready app structure
+- Deployment-ready app structure and production thinking
 
-## Why recruiters should care
+## Why this is a strong portfolio project
 
-Code Sentinel is more than a demo app; it reflects the kind of product work that is valuable in modern software teams:
-
-- It solves a real problem: keeping code quality visible
-- It combines product, engineering, and AI thinking in one project
-- It shows experience across frontend, backend, and system integration
-- It demonstrates readiness to build tools that teams can actually use
-
-The project is a strong example of someone who can take an idea from concept to a working, polished application with real-world architectural decisions.
-
-## License
-
-This project is currently provided as a portfolio project and is not formally licensed for commercial use unless otherwise stated.
+Code Sentinel is a practical, product-oriented application that reflects how modern software teams use data, automation, and AI to improve developer workflows. It demonstrates the ability to build a polished, end-to-end system that connects user experience, system design, integrations, and intelligent analysis into one unified product.
 
 ## Contact
 
-For collaboration or job opportunities, please connect via GitHub or reach out through the project owner profile.
+For collaboration or opportunities, connect with me on GitHub:
+
+- GitHub: https://github.com/MohammedHashimNilger
 
 ---
 
-Built with a focus on product value, code quality, and practical engineering execution.
+Built as a portfolio project to showcase product thinking, full-stack development, and AI-powered application design.
